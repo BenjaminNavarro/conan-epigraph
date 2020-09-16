@@ -7,19 +7,15 @@ class EpigraphConan(ConanFile):
     version = "0.4.0"
     license = "MIT"
     author = "Benjamin Navarro <navarro.benjamin13@gmail.com>"
-    url = "<Package recipe repository url here, for issues about the package>"
+    url = "https://github.com:BenjaminNavarro/conan-epigraph"
     description = "A modern C++ interface to formulate and solve linear, quadratic and second order cone problems"
     topics = ("numerical-optimization", "socp", "second-order-optimization",
               "quadratic-programming", "eigen-library", "qp", "eigen")
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False],
-               "fPIC": [True, False],
+    options = {"fPIC": [True, False],
                "enable_osqp": [True, False],
                "enable_ecos": [True, False]}
-
-    # EiCOS is the only solver that doesn't change the package license because it is itself MIT licensed
-    default_options = {"shared": False,
-                       "fPIC": True,
+    default_options = {"fPIC": True,
                        "enable_osqp": True,
                        "enable_ecos": True}
     generators = "cmake_find_package"
@@ -35,6 +31,10 @@ class EpigraphConan(ConanFile):
         git = tools.Git()
         git.clone("https://github.com/EmbersArc/Epigraph.git",
                   branch="v{}".format(self.version), shallow=True)
+
+    def configure(self):
+        if self.settings.compiler == 'Visual Studio':
+            del self.options.fPIC
 
     def build(self):
         cmake = CMake(self)
