@@ -18,7 +18,7 @@ class EpigraphConan(ConanFile):
     default_options = {"fPIC": True,
                        "enable_osqp": True,
                        "enable_ecos": True}
-    generators = "cmake_find_package"
+    generators = "cmake_find_package_multi"
     requires = "eigen/3.3.7@conan/stable"
 
     def requirements(self):
@@ -29,8 +29,8 @@ class EpigraphConan(ConanFile):
 
     def source(self):
         git = tools.Git()
-        git.clone("https://github.com/EmbersArc/Epigraph.git",
-                  branch="v{}".format(self.version), shallow=True)
+        git.clone("https://github.com/BenjaminNavarro/Epigraph.git",
+                  branch="eigen_conan_fix", shallow=True)
 
     def configure(self):
         if self.settings.compiler == 'Visual Studio':
