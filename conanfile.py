@@ -4,7 +4,7 @@ import os
 
 class EpigraphConan(ConanFile):
     name = "epigraph"
-    version = "0.4.0"
+    version = "0.4.2"
     license = "MIT"
     author = "Benjamin Navarro <navarro.benjamin13@gmail.com>"
     url = "https://github.com:BenjaminNavarro/conan-epigraph"
@@ -19,7 +19,7 @@ class EpigraphConan(ConanFile):
                        "enable_osqp": True,
                        "enable_ecos": True}
     generators = "cmake_find_package_multi"
-    requires = "eigen/3.3.7@conan/stable"
+    requires = "eigen/3.3.9"
 
     def requirements(self):
         if self.options.enable_osqp:
@@ -29,8 +29,8 @@ class EpigraphConan(ConanFile):
 
     def source(self):
         git = tools.Git()
-        git.clone("https://github.com/BenjaminNavarro/Epigraph.git",
-                  branch="eigen_conan_fix", shallow=True)
+        git.clone("https://github.com/EmbersArc/Epigraph.git",
+                  branch="v0.4.2", shallow=True)
 
     def configure(self):
         if self.settings.compiler == 'Visual Studio':
